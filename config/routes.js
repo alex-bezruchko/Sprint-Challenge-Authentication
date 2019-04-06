@@ -42,14 +42,11 @@ function generateToken(user) {
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
-  console.log(username);
   users.findBy({ username })
     .first()
     .then(user => {
-      console.log(user)
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user)
-        console.log(token);
         res.status(200).json({
           token, message: `Welcome ${user.username}!`,
         });
@@ -63,6 +60,9 @@ function login(req, res) {
 }
 
 function getJokes(req, res) {
+  // console.log('hello')
+  // console.log(req.headers.authorization)
+  // console.log(req.headers);
   const requestOptions = {
     headers: { accept: 'application/json' },
   };
